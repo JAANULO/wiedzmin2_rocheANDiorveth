@@ -1,0 +1,57 @@
+================================================================================
+  PRZEWODNIK ROZWOJU MODA: WIEDŹMIN 2 - HYBRYDOWA ŚCIEŻKA (ROCHE & IORWETH)
+================================================================================
+
+--- 1. PODSUMOWANIE STANU PROJEKTU (CO JUŻ ZROBIONO) ---
+
+1. ŚRODOWISKO I REPOZYTORIUM GIT:
+   - Utworzono plik README.md, .gitignore, docs/notes.md oraz ustrukturyzowane commity.
+   - Wszystkie zmodyfikowane pliki moda trafiają do folderu: src/
+
+2. STWORZONE NARZĘDZIA POMOCNICZE:
+   - skaner_questow.py  -> Skaner plików binarnych gry (wygenerował questy_do_modyfikacji.csv)
+   - sync_do_git.py     -> Kopiuje zmienione w REDkicie pliki gry prosto do folderu src/
+   - zarzadzaj_zapisami.py -> Chowa stare prywatne zapisy pod czyste testy
+   - uruchom_redkit.bat -> Szybki launcher edytora REDkit
+
+3. WYKONANE EDYCJE W REDKITIE (ZAPISANE W GIT):
+   - src/1_act1/q108_choice.w2phase -> Zduplikowano sygnały wyjściowe z klocka choice
+     (wypuszcza sygnał przez zduplikowane strzałki with_Iorweth i with_Roche oraz nadaje oba fakty q108_helping_roche i q108_helping_scoia).
+   - src/2_act2/act 2.w2quest -> Przepięto bramkę wejściową Aktu II
+     (sygnał po wjeździe do Aktu II uruchamia jednocześnie obóz Vergen i Kaedwen).
+
+================================================================================
+
+--- 2. KOLEJNE KROKI DO WYKONANIA (PLAN DZIAŁANIA) ---
+
+KROK 1: TEST W GRZE (Weryfikacja Rozdroża i Aktu II)
+  1. Uruchom grę Wiedźmin 2.
+  2. Wczytaj zapis z Aktu I (przed wyborem u Roche'a/Iorwetha).
+  3. Wykonaj akcję z Rochem i przejdź do Aktu II.
+  4. Sprawdź w Dzienniku (J):
+     a) Czy quest Iorwetha NIE ZOSTANIE OBLANY w Akcie I?
+     b) Czy po wylądowaniu w Akcie II aktywują się wątki obu obozów?
+
+KROK 2: SYSTEM FRAKCJI I WROGOŚCI NPC (Akt II)
+  - Jeśli po wejściu do obozu Kaedweńczyków lub Vergen strażnicy atakują Geralta,
+    modyfikujemy nastawienie frakcji (Factions) w plikach:
+    • data/game/2_act2/act2_community_camp_spawn.w2phase
+    • data/game/2_act2/act2_community_vergen_spawn.w2phase
+    lub ustawiamy w skrypcie QSetGroupAttitude nastawienie neutralne/friendly.
+
+KROK 3: NAWIGACJA PRZEZ MGŁĘ I SEKWENCJA QUESTÓW POBOCZNYCH
+  - Umożliwienie swobodnego przechodzenia przez Mgłę w Akcie II (modyfikacja q208_draug.w2phase).
+  - Weryfikacja questów głównej linii obu stron (Saskia vs Henselt).
+
+================================================================================
+
+--- 3. PROMPT STARTOWY DO NOWEJ ROZMOWY Z AI (SKOPIUJ I WKLEJ W NOWYM CZACIE) ---
+
+"Cześć! Kontynuujemy pracę nad modem do gry Wiedźmin 2: Zabójcy Królów (Hybrydowa ścieżka Roche/Iorweth).
+Całe repozytorium jest już ustrukturyzowane i zcommitowane w Gicie.
+Mamy wykonane i skopiowane do src/ pierwsze dwie główne edycje w REDkicie:
+1. src/1_act1/q108_choice.w2phase (połączenie obu faktów i podwójne wyjście wyboru).
+2. src/2_act2/act 2.w2quest (podwójne inicjowanie obozów Vergen i Kaedwen).
+Przeczytaj plik KROKI_ROZWOJU_MODA.txt oraz docs/notes.md i pomóż mi przejść do kolejnego kroku."
+
+================================================================================

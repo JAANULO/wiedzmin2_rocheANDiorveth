@@ -36,10 +36,13 @@ wiedzmin2_rocheANDiorveth/
 ├── src/                       # Zmodyfikowane grafy .w2quest/.w2phase moda
 ├── docs/                      # Dokumentacja techniczna i rejestr flag FactsDB
 │   └── notes.md               # Notatki z analizy w REDkicie
-├── skaner_questow.py          # Główny skrypt skanujący questy (dawniej plik.py)
+├── KROKI_ROZWOJU_MODA.txt     # Przewodnik rozwoju moda i plan kolejnych kroków
+├── skaner_questow.py          # Główny skrypt skanujący questy
 ├── sync_do_git.py             # Automatyczna synchronizacja zmian z REDkita do Git
 ├── zarzadzaj_zapisami.py      # Zarządzanie profilami zapisów gry (czysty profil testowy)
 ├── uruchom_redkit.bat         # Szybki launcher REDkita
+├── uruchom_gre.bat            # Launcher gry Wiedźmin 2 w trybie -uncooked
+├── uruchom_gre.py             # Skrypt Pythona uruchamiający grę w trybie -uncooked
 ├── README.md                  # Dokumentacja główna projektu
 └── .gitignore                 # Wykluczenia z kontroli wersji
 ```
@@ -52,6 +55,7 @@ wiedzmin2_rocheANDiorveth/
 * **`sync_do_git.py`**: Kopiuje zmodyfikowane pliki z katalogu gry bezpośrednio do repozytorium `src/`.
 * **`zarzadzaj_zapisami.py`**: Chowa dotychczasowe prywatne zapisy gry, zostawiając czysty folder pod szybkie testowanie moda.
 * **`uruchom_redkit.bat`**: Szybkie uruchomienie edytora REDkit.
+* **`uruchom_gre.bat` / `uruchom_gre.py`**: Uruchamia grę Wiedźmin 2 z flagą `-uncooked`, zmuszającą silnik do wczytywania luźnych zasobów moda z `data/game/`.
 
 ### Uruchomienie skanera:
 ```bash
