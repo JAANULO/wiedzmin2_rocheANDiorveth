@@ -1,0 +1,25 @@
+# Pliki tymczasowe i pamięć podręczna REDkita / REDengine
+*.cache
+*.blb
+*.log
+*.tmp
+*.bak
+*.dzip_bak
+editor.log
+REDkit.log
+
+# Bazy danych tymczasowe
+*.sqlite-journal
+*.lock
+
+# Wyniki tymczasowych skanów
+raport_questow.csv
+
+# Środowisko Python
+__pycache__/
+*.pyc
+
+# Pliki systemowe OS
+Thumbs.db
+Desktop.ini
+.DS_Store
