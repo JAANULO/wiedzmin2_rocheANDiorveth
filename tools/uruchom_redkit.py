@@ -2,9 +2,7 @@ import os
 import sys
 import ctypes
 import subprocess
-
-REDKIT_PATH = r"D:\SteamLibrary\steamapps\common\the witcher 2\bin\editor.exe"
-REDKIT_DIR = r"D:\SteamLibrary\steamapps\common\the witcher 2\bin"
+from config import REDKIT_EXE, REDKIT_BIN_DIR
 
 def is_admin():
     try:
@@ -14,31 +12,30 @@ def is_admin():
 
 def uruchom_redkit():
     if not is_admin():
-        print("Brak uprawnien administratora. Proba wymuszenia (zapobiega bledom disk I/O)...")
+        print("Brak uprawnień administratora. Próba wymuszenia (zapobiega błędom disk I/O)...")
         try:
-            # sys.executable to np. python.exe, sys.argv[0] to obecny skrypt
             ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
         except Exception as e:
             print(f"🔴 Błąd uprawnień UAC: Użytkownik odrzucił prośbę lub wystąpił problem techniczny: {e}")
         return
 
-    if not os.path.exists(REDKIT_DIR):
-        print(f"🔴 Błąd: Nie odnaleziono katalogu gry: {REDKIT_DIR}")
-        print("Upewnij się, że gra znajduje się na dysku pod wskazanym adresem.")
+    if not os.path.exists(REDKIT_BIN_DIR):
+        print(f"🔴 Błąd: Nie odnaleziono katalogu gry: {REDKIT_BIN_DIR}")
+        print("Upewnij się, że gra znajduje się na dysku pod wskazanym adresem w config.py.")
         return
 
-    if not os.path.exists(REDKIT_PATH):
+    if not os.path.exists(REDKIT_EXE):
         print(f"🔴 Błąd: Wskazany folder nie zawiera pliku editor.exe!")
-        print(f"Brak REDkita w: {REDKIT_PATH}")
+        print(f"Brak REDkita w: {REDKIT_EXE}")
         return
 
     print("=" * 60)
     print(" 🚀 Uruchamianie REDkit (Wiedźmin 2) jako Administrator...")
     print("=" * 60)
-    print(f"Ścieżka: {REDKIT_PATH}\n")
+    print(f"Ścieżka: {REDKIT_EXE}\n")
 
     try:
-        subprocess.Popen([REDKIT_PATH], cwd=REDKIT_DIR)
+        subprocess.Popen([REDKIT_EXE], cwd=REDKIT_BIN_DIR)
         print("🟢 REDkit został pomyślnie uruchomiony w tle!")
     except FileNotFoundError:
         print("🔴 Błąd: Pomimo istnienia katalogu, proces subprocess nie mógł załadować programu.")

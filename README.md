@@ -29,39 +29,69 @@ Niniejsza modyfikacja znosi sztuczną blokadę zawartości, pozwalając na dośw
 
 ---
 
+## 🚀 Szybki Start na Nowym Urządzeniu
+
+Jeśli klonujesz to repozytorium na nowym komputerze, wykonaj te 2 proste kroki:
+
+```bash
+# 1. Sklonuj repozytorium
+git clone https://github.com/JAANULO/wiedzmin2_rocheANDiorveth.git
+cd wiedzmin2_rocheANDiorveth
+
+# 2. Utwórz powiązanie Junction z UserContent REDkita (standard CDPR):
+python tools/konfiguruj_symlink.py
+```
+
+> **Gotowe!** Skrypt `konfiguruj_symlink.py` połączy folder `UserContent\mod_hybrid_path` REDkita z katalogiem `src/` repozytorium w czasie rzeczywistym.  
+> Każdy zapis w REDkicie trafia od razu do repozytorium Git, bez konieczności ręcznego kopiowania czegokolwiek.
+
+---
+
 ## 📁 Struktura Repozytorium
 
 ```
 wiedzmin2_rocheANDiorveth/
-├── src/                       # Zmodyfikowane grafy .w2quest/.w2phase moda
-├── docs/                      # Dokumentacja techniczna i rejestr flag FactsDB
-│   └── notes.md               # Notatki z analizy w REDkicie
-├── KROKI_ROZWOJU_MODA.txt     # Przewodnik rozwoju moda i plan kolejnych kroków
-├── skaner_questow.py          # Główny skrypt skanujący questy
-├── sync_do_git.py             # Automatyczna synchronizacja zmian z REDkita do Git
-├── zarzadzaj_zapisami.py      # Zarządzanie profilami zapisów gry (czysty profil testowy)
-├── uruchom_redkit.bat         # Szybki launcher REDkita
-├── uruchom_gre.bat            # Launcher gry Wiedźmin 2 w trybie -uncooked
-├── uruchom_gre.py             # Skrypt Pythona uruchamiający grę w trybie -uncooked
-├── README.md                  # Dokumentacja główna projektu
-└── .gitignore                 # Wykluczenia z kontroli wersji
+├── Analiza modyfikacji do gry Wiedźmin 2.pdf # Raport z rozwiązywania problemów REDkit/PIE i skanowania
+├── Claude-Mod do Wiedźmina 2 z narzędziami Gibbed.RED-20260916-1555.md # Analiza Gibbed.RED, wcc.exe i CR2W
+├── src/                          # Zmodyfikowane grafy .w2quest/.w2phase moda
+│   ├── 1_act1/                   # Logika wyboru w Akcie I (q108_choice)
+│   ├── 2_act2/                   # Bramka wejściowa Aktu II (act 2.w2quest) i questy poboczne
+│   └── meta_quests/              # Logika dzienników (postaci, miejsca, wspomnienia)
+├── docs/                         # Dokumentacja techniczna projektu
+│   ├── notes.md                  # Notatki z analizy w REDkicie, RE i zestawienie badań
+│   └── ROADMAP.md                # Przewodnik rozwoju moda, zadania i prompt startowy
+├── data/                         # Dane wygenerowane ze skanowania logiki gry
+│   ├── questy_do_modyfikacji.csv # Wyselekcjonowane 114 kluczowych plików questów
+│   └── raport_questow.csv        # Pełny wygenerowany raport skanera
+├── tools/                        # Skrypty Python oraz launchery narzędziowe
+│   ├── config.py                 # Centralny plik konfiguracyjny ścieżek
+│   ├── skaner_questow.py         # Skaner binarny plików questów gry
+│   ├── sync_do_git.py            # Automatyczna synchronizacja zmian z REDkita do Git
+│   ├── konfiguruj_symlink.py     # Tworzenie dowiązań typu Junction (UserContent <-> Git)
+│   ├── zarzadzaj_zapisami.py     # Zarządzanie profilami zapisów gry (czysty profil testowy)
+│   ├── uruchom_redkit.bat / .py  # Launcher REDkita z prawami Administratora
+│   └── uruchom_gre.bat / .py     # Launcher gry Wiedźmin 2 w trybie -uncooked
+├── README.md                     # Dokumentacja główna projektu
+└── .gitignore                    # Wykluczenia z kontroli wersji
 ```
 
 ---
 
-## 🔍 Narzędzia Pomocnicze (`skaner_questow.py` i inne)
+## 🔍 Narzędzia Pomocnicze (`tools/`)
 
-* **`skaner_questow.py`**: Przeszukuje pliki logiki `.w2quest` / `.w2phase` pod kątem flag `roche`, `iorveth`, `side_chosen` i zapisuje wyselekcjonowane pliki w `questy_do_modyfikacji.csv`.
-* **`sync_do_git.py`**: Kopiuje zmodyfikowane pliki z katalogu gry bezpośrednio do repozytorium `src/`.
-* **`zarzadzaj_zapisami.py`**: Chowa dotychczasowe prywatne zapisy gry, zostawiając czysty folder pod szybkie testowanie moda.
-* **`uruchom_redkit.bat`**: Szybkie uruchomienie edytora REDkit.
-* **`uruchom_gre.bat` / `uruchom_gre.py`**: Uruchamia grę Wiedźmin 2 z flagą `-uncooked`, zmuszającą silnik do wczytywania luźnych zasobów moda z `data/game/`.
+* **`tools/config.py`**: Centralny moduł ścieżek dostępu (Steam / REDkit / UserContent).
+* **`tools/skaner_questow.py`**: Przeszukuje pliki logiki `.w2quest` / `.w2phase` i zapisuje wyniki w `data/questy_do_modyfikacji.csv`.
+* **`tools/sync_do_git.py`**: Kopiuje zmodyfikowane pliki z katalogu gry bezpośrednio do repozytorium `src/`.
+* **`tools/konfiguruj_symlink.py`**: Tworzy dowiązania typu Junction (`mklink /J`) pomiędzy katalogiem `UserContent` REDkita a folderem `src/`.
+* **`tools/zarzadzaj_zapisami.py`**: Chowa dotychczasowe prywatne zapisy gry pod czyste środowisko testowe.
+* **`tools/uruchom_redkit.bat` / `uruchom_redkit.py`**: Szybkie uruchomienie edytora REDkit z wymuszeniem uprawnień Administratora (UAC).
+* **`tools/uruchom_gre.bat` / `uruchom_gre.py`**: Uruchamia grę Wiedźmin 2 z flagą `-uncooked` z `data/game/`.
 
 ### Uruchomienie skanera:
 ```bash
-python skaner_questow.py
+python tools/skaner_questow.py
 ```
-Skrypt przeszukuje strukturę gry w poszukiwaniu odniesień do kluczowych frakcji i flag wyboru (`roche`, `iorveth`, `side_chosen`, `path`), a wynik zapisuje w pliku `raport_questow.csv`.
+Skrypt przeszukuje strukturę gry w poszukiwaniu odniesień do kluczowych frakcji i flag wyboru (`roche`, `iorveth`, `side_chosen`, `path`), a wynik zapisuje w pliku `data/questy_do_modyfikacji.csv`.
 
 ---
 
@@ -70,9 +100,10 @@ Skrypt przeszukuje strukturę gry w poszukiwaniu odniesień do kluczowych frakcj
 - [x] **Etap 1: Przygotowanie środowiska i nauka REDkita**
   - Instalacja gry, REDkita, edytorów oraz Gita.
   - Inicjalizacja repozytorium i dokumentacji.
-- [/] **Etap 2: Analiza struktury gry i flag wyboru (`FactsDB`)**
-  - Skanowanie plików `.w2quest` i `.w2scene` pod kątem flag `q108_iorveth_path`, `q108_roche_path`.
-  - Identyfikacja punktów zwrotnych w Akcie I i II.
+- [/] **Etap 2: Analiza struktury gry, flag wyboru (`FactsDB`) oraz edycje bazowe**
+  - Skanowanie plików `.w2quest` i `.w2scene` pod kątem flag (`q108_choice`, `act 2.w2quest`).
+  - Przepięcie rozgałęzienia Aktu I (`q108_choice.w2phase`) i bramki Aktu II (`act 2.w2quest`).
+  - Dodanie zsynchronizowanych questów poboczne Aktu II (`sq202`, `sq204`, `sq205i`, `sq206i`) oraz meta-questów (`characters_journal`, `places_jurnal`, `lost_memories`).
 - [ ] **Etap 3: Projektowanie rozwiązania hybrydowego**
   - Wybór architektury połączenia ścieżek (sekwencyjna vs równoległa z przejściem przez Mgłę).
   - Opracowanie zbalansowanych nastawień frakcji (`Factions`).

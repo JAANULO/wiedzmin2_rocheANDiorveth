@@ -1,9 +1,7 @@
 import os
 import shutil
 import time
-
-GAME_DATA_DIR = r"C:\SteamLibrary\steamapps\common\the witcher 2\data\game"
-REPO_SRC_DIR = r"c:\Users\PC\Documents\GitHub\wiedzmin2_rocheANDiorveth\src"
+from config import GAME_DATA_DIR, REPO_SRC_DIR
 
 def synchronizuj_zmiany(minuty=120):
     """
@@ -16,6 +14,10 @@ def synchronizuj_zmiany(minuty=120):
     print("=" * 70)
     print(" SYNCHRONIZACJA ZMIAN Z REDKITA DO REPOZYTORIUM GIT")
     print("=" * 70)
+
+    if not os.path.exists(GAME_DATA_DIR):
+        print(f"🔴 Błąd: Nie odnaleziono katalogu gry: {GAME_DATA_DIR}")
+        return
 
     for root, dirs, files in os.walk(GAME_DATA_DIR):
         for file in files:

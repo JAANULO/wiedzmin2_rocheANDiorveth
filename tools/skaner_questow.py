@@ -1,12 +1,10 @@
 import os
 import csv
 import re
-
-# Konfiguracja ścieżki gry
-SCIEZKA_BAZOWA = r"C:\SteamLibrary\steamapps\common\the witcher 2\data\game"
+from config import GAME_DATA_DIR, REPO_DATA_DIR
 
 # Pliki docelowe raportu
-PLIK_WYNIKOWY = "questy_do_modyfikacji.csv"
+PLIK_WYNIKOWY = REPO_DATA_DIR / "questy_do_modyfikacji.csv"
 
 # Tylko pliki grafów i faz questów (omijamy sceny dialogowe .w2scene, voicesety i rozmowy tła)
 ROZSZERZENIA_LOGIKI = (".w2quest", ".w2phase")
@@ -49,6 +47,12 @@ def skanuj_kluczowe_questy(katalog_startowy, plik_wyjsciowy):
     print("=" * 70)
     print(f"Katalog źródłowy: {katalog_startowy}\n")
     
+    if not os.path.exists(katalog_startowy):
+        print(f"🔴 Błąd: Nie odnaleziono katalogu gry: {katalog_startowy}")
+        return
+
+    os.makedirs(os.path.dirname(plik_wyjsciowy), exist_ok=True)
+
     for root, dirs, files in os.walk(katalog_startowy):
         # Omijanie katalogów generujących szum
         if any(ign in root.lower() for ign in KATALOGI_IGNOROWANE):
@@ -112,4 +116,4 @@ def skanuj_kluczowe_questy(katalog_startowy, plik_wyjsciowy):
     print(f"\n Wyfiltrowana lista została zapisana do: {plik_wyjsciowy}")
 
 if __name__ == "__main__":
-    skanuj_kluczowe_questy(SCIEZKA_BAZOWA, PLIK_WYNIKOWY)
+    skanuj_kluczowe_questy(GAME_DATA_DIR, PLIK_WYNIKOWY)
