@@ -63,6 +63,7 @@ Prace zrealizowane i zczytane z edytora REDkit:
 
 ## 🧪 Dziennik Testów i Prototypów (PoC)
 
+* **SUKCES (Akt III - Loc Muinne):** Przetestowano przepięcie sygnałów wyjściowych węzła wyboru w Akcie III. Po wyjściu z rozmowy (wybór ścieżki Filippy) w Dzienniku aktywowały się jednocześnie oba zadania: **„Gdzie jest Triss Merigold?”** oraz **„Łamacz czarów”** (zamiast oblania drugiego zadania). Potwierdza to poprawność metodyki modyfikacji grafów `.w2phase`.
 * **Mechanika oryginalna (Flotsam):** W unmodowanej grze oba zadania („Na rozstajach: Iorweth” i „Na rozstajach: Roche”) są aktywne równolegle w Dzienniku pod koniec Aktu I. Podjęcie akcji u jednego lidera natychmiast wysyła sygnał `QuestFailed` do drugiego.
 * **Cel Modyfikacji w `q108_choice.w2phase`:** Usunięcie strzałki prowadzącej do bloku `QuestFailed` dla Iorwetha po rozpoczęciu misji u Roche'a (i analogicznie dla Roche'a przy misji Iorwetha). Dzięki temu oba zadania pozostaną aktywne i wykonalne.
 
