@@ -11,7 +11,7 @@ python uruchom_gre.py
 if %ERRORLEVEL% NEQ 0 (
     echo [INFORMACJA] Próba uruchomienia bez pośrednictwa Pythona...
     cd /d "C:\SteamLibrary\steamapps\common\the witcher 2\bin"
-    start "" "witcher2.exe" -uncooked
+    start "" "witcher2.exe" -uncooked -novideos
 )
 
 pause
