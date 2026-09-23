@@ -2,7 +2,15 @@ import os
 import sys
 import ctypes
 import subprocess
-from config import REDKIT_EXE, REDKIT_BIN_DIR
+
+TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
+if TOOLS_DIR not in sys.path:
+    sys.path.insert(0, TOOLS_DIR)
+
+try:
+    from config import REDKIT_EXE, REDKIT_BIN_DIR
+except ImportError:
+    from tools.config import REDKIT_EXE, REDKIT_BIN_DIR
 
 def is_admin():
     try:
